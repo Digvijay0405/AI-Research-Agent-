@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Research Agent</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script defer
+            src="{{ url_for('static', filename='script.js') }}">
+    </script>
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+    <h1>🤖 AI Research Agent</h1>
+    <p class="subtitle">Search • Analyze • Summarize • Cite Sources</p>
+
+    <form method="POST" id="researchForm">
+        <div class="search-box">
+
+            <input
+                type="text"
+                name="question"
+                placeholder="Ask any research question..."
+                required>
+
+            <button type="submit">Research</button>
+
+        </div>
+    </form>
+
+    <div id="loader" class="loader hidden">
+        <div class="spinner"></div>
+        <p>Searching trusted sources...</p>
+    </div>
+
+    {% if summary %}
+
+    <div class="card">
+        <h2>📄 Research Summary</h2>
+
+        <pre>{{ summary }}</pre>
+
+        <button class="copy-btn" onclick="copySummary()">
+            📋 Copy Summary
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>🌐 Sources Used</h2>
+
+        {% for source in sources %}
+        <div class="source-item">
+            <a href="{{ source }}" target="_blank">
+                {{ source }}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="info-card">
+        <div>
+            ⚙️ Steps Used
+            <span class="badge">{{ steps }}</span>
+        </div>
+
+        <div>
+            🕒 {{ timestamp }}
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% if history %}
+    <div class="card">
+        <h2>📜 Recent Searches</h2>
+
+        {% for item in history %}
+            <div class="history-item">{{ item }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
